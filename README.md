@@ -38,6 +38,6 @@ python manage.py runserver
     **Логин:** maxter95. **Пароль:** pass4321
 
 
-![Авторизация](./media/login.jpg)
+![Авторизация](./media/login.jpeg)
 
-![Клиенты](./media/clients.jpg)
+![Клиенты](./media/clients.jpeg)
