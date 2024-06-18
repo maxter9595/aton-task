@@ -1,0 +1,46 @@
+{% extends 'clients/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'vendor/css/index.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="table-container">
+        <table class="styled-table">
+            <tr>
+                <th>Номер счета</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Дата рождения</th>
+                <th>ИНН</th>
+                <th>Статус</th>
+                <th>ФИО ответственного</th>
+            </tr>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.account_number }}</td>
+                <td>{{ client.last_name }}</td>
+                <td>{{ client.first_name }}</td>
+                <td>{{ client.middle_name }}</td>
+                <td>{{ client.birth_date }}</td>
+                <td>{{ client.inn }}</td>
+                <td>
+                    <form action="{% url 'clients:update_status' account_number=client.account_number %}" method="post">
+                        {% csrf_token %}
+                        <select name="status">
+                            <option value="В работе" {% if client.status == "В работе" %} selected {% endif %}>В работе</option>
+                            <option value="Не в работе" {% if client.status == "Не в работе" %} selected {% endif %}>Не в работе</option>
+                            <option value="Отказ" {% if client.status == "Отказ" %} selected {% endif %}>Отказ</option>
+                            <option value="Сделка закрыта" {% if client.status == "Сделка закрыта" %} selected {% endif %}>Сделка закрыта</option>
+                        </select>
+                        <input type="submit" value="Обновить статус" >
+                    </form>
+                </td>
+                <td>{{ client.get_responsible_full_name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
